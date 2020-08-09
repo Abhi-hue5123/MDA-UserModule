@@ -89,14 +89,14 @@ def simple_upload(request):
         email1.send()
         connection.close()
 
-            #UserListInvitation(data[2])
+            
             #send_mail('Invitation MDA','This is MDA application Invitation',settings.EMAIL_HOST_USER, data[2], fail_silently=False)
             #send_mail('Invitation MDA', 'This is MDA application Invitation', settings.EMAIL_HOST_USER, data[2], fail_silently=False)
     return render(request, 'socius/upload.html')
 
     
 
-def UserListInvitation(to_email):
+'''def UserListInvitation(to_email):
     current_site = get_current_site(request)
     mail_subject = 'Invitation MDA.'
     message = render_to_string('accounts/acc_active_email.html', {
@@ -109,6 +109,7 @@ def UserListInvitation(to_email):
     email = EmailMessage(
         mail_subject, message, to=[to_email]
     )
-    email.send()
+    email.send()'''
+
 
 
