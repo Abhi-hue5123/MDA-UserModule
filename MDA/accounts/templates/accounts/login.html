@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Login Page</title>
+        <meta name='viewport' content="width=device-width, initial-scale=1">
+        <link rel='stylesheet' type='text/css' media='screen' href='main.css'>
+        <script src='main.js'></script>
+    </head>
+    <body>
+        <form action="login" method="post">
+            {% csrf_token %}
+            <input type='text' name="username" placeholder="username"><br>
+            <input type='password' name="password" placeholder="password"><br>
+            <input type="Submit">
+        </form>
+
+        {% if messages %}
+          <ul class="messages">
+              {% for message in messages %}
+              <h3> {{message}} </h3>
+              {% endfor %}
+          </ul>
+        {% endif %}
+
+        <div class="mt-4">
+					<div class="d-flex justify-content-center links">
+						Don't have an account? <a href="{% url 'register' %}" class="ml-2">Sign Up</a>
+					</div>
+					<div class="d-flex justify-content-center links">
+						Forgot password? <a href="{% url 'reset_password' %}" class="ml-2">Reset password</a>
+					</div>
+			
+		</div>
+
+    </body>
+
+</html>
