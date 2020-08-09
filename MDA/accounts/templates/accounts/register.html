@@ -157,8 +157,10 @@ label.light {
           <label for="mail">Email:<span class="req"> *</span></label>
           <input type="email" id="mail" name="email" placeholder="mail i'd" required autocomplete="off">
 
-          <label for="mail">Coupon:</label>
-          <input type="text" id="uname" placeholder="Coupon Code" name="Coupon" >
+          <!-- <label for="mail">Coupon:</label>
+          <input type="text" id="uname" placeholder="Coupon Code" name="Coupon" > -->
+
+          {{ profile_form.as_p }}
           
           <label for="password">Password:<span class="req"> *</span></label>
           <input type="password" id="password" name="password1" placeholder="Password" required autocomplete="off">
