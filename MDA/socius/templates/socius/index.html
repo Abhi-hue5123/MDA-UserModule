@@ -15,6 +15,13 @@
 <link rel="stylesheet" type="text/css" href="{% static 'plugins/OwlCarousel2-2.2.1/animate.css' %}">
 <link rel="stylesheet" type="text/css" href="{% static 'styles/main_styles.css' %}">
 <link rel="stylesheet" type="text/css" href="{% static 'styles/responsive.css' %}">
+<style> 
+	.dropdown-item
+	{
+	  color:black;
+	}
+</style>
+
 </head>
 <body>
 
@@ -38,6 +45,25 @@
 									<li>Hello, {{user.first_name}}</li>
 									<li><a href="accounts/logout">Logout</a></li>
 									<li><a href="adduser">Upload User</a></li>
+									
+										<li class="nav-item dropdown">
+										  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color:blanchedalmond">
+											Profile
+										  </a>
+									  
+										  <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+											<a class="dropdown-item" href="PersonalDetails.html">Personal details</a>
+											<a class="dropdown-item" href='Skills.html'>Skills & Specialities</a>
+											<a  class="dropdown-item" href="Education.html">Education</a>
+											<a class="dropdown-item" href="Certifications.html">Certifications</a>
+											<a class="dropdown-item" href="Testimonials.html">Testimonials</a>
+											<a class="dropdown-item" href="#", target="blank">Documents</a>
+											<a class="dropdown-item" href="#", target="blank">Events</a>
+										  </div>
+										</li>
+										   
+									
+									
 									{% else %}
 									<li><a href="accounts/register">Register</a></li>
 									<li><a href="accounts/login">Login</a></li>
@@ -532,5 +558,6 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 <script src="{% static 'plugins/easing/easing.js' %}"></script>
 <script src="{% static 'plugins/parallax-js-master/parallax.min.js' %}"></script>
 <script src="{% static 'js/custom.js' %}"></script>
+
 </body>
 </html>

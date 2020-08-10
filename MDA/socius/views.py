@@ -16,6 +16,8 @@ from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.contrib.auth import get_user_model
 UserModel = get_user_model()
 from django.core import mail
+import uuid 
+from .models import MemberProfile,Phone,Address,Speciality,KeySKills,Certificates,Testimonial,Document,AcademicDetails,Event
 
 
 # Create your views here.
@@ -112,4 +114,74 @@ def simple_upload(request):
     email.send()'''
 
 
+def PersonalDetails(request):
+    if request.method == 'POST':
+        M= MemberProfile()
+        M.First_Name = request.POST['First_Name']
+        M.Last_Name =  request.POST["Last_Name"]
+        M.Bio =  request.POST["Bio"]
+        M.Tag_Line =  request.POST["Tag_Line"]
+        M.Status =  request.POST["Status"]
+        M.save()
 
+        P= Phone()
+        P.Phone =  request.POST["Phone"]
+        P.Email_Id =  request.POST["Email_id"]
+        P.save()
+
+        A= Address()
+        A.Dno =  request.POST["Dno"]
+        A.Street = request.POST["Street"]
+        A.City =  request.POST["City"]
+        A.State =  request.POST["State"]
+        A.Country =  request.POST["Country"]
+        A.Pin_Code =  request.POST["Pin_code"]
+        A.save()
+    return render(request,'socius/PersonalDetails.html')
+
+def Education(request):
+    if request.method == 'POST':
+        E=AcademicDetails()
+        E.Institution_Name = request.POST["Institution_Name"]
+        E.Degree = request.POST["Degree"]
+        E.Field_Of_Study = request.POST["Field_Of_Study"]
+        E.Grade = request.POST["Grade"]
+        E.Start_Date = request.POST["Start_Date"]
+        E.End_Date = request.POST["End_Date"]
+        E.Description = request.POST["Description"]
+        E.save()
+    return render(request,'socius/Education.html')
+
+def Skills(request):
+    if request.method == 'POST':
+        Sk=KeySKills()
+        Sk.Skills = request.POST['Skills']
+        Sk.save()
+        Sp= Speciality()
+        Sp.speciality = request.POST['speciality']
+        Sp.save()
+    return render(request,'socius/Skills.html')
+
+def  Certifications(request):
+    if request.method == 'POST':
+        C = Certificates()
+        C.Name =  request.POST['Name']
+        C.Issuing_Org = request.POST['Issuing_Org']
+        C.Issued_Date = request.POST['Issued_Date']
+        C.Expiration_Date = request.POST['Expiration_Date']
+        C.Credential_Id = request.POST['Credential_Id']
+        C.Credential_URL = request.POST['Credential_URL']
+        C.Description = request.POST['Description']
+        C.save()
+    return render(request,'socius/Certifications.html')
+
+def Testimonials(request):
+    if request.method == 'POST':
+        T=Testimonial()
+        T.Description = request.POST['Description']
+        T.Attestant = request.POST['Attestant']
+        T.Date = request.POST['Date']
+        T.Designation = request.POST['Designation']
+        T.Location = request.POST['Location']
+        T.save()
+    return render(request,'socius/Testimonials.html')

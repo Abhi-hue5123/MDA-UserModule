@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Certifications</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<div class="container">
+    <form action="" class="form-horizontal" role="form" method="POST">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="">Course Name</label>
+            <input type="text" class="form-control" id="Name" placeholder="Ex: Cisco Certified Network Associate Security(CCNA)" name="Name" required>
+        </div>
+
+        <div class="form-group">
+            <label for="">Issuing Organization</label>
+            <input type="text" class="form-control" id="Issuing_Org" placeholder="Ex: Cisco" name="Issuing_Org" required>
+        </div>
+
+        <div class="container row">
+            <div class="form-group">
+                <label for="">Issue Date</label>
+                <input type="date" class="form-control" id="Issued_Date"  name="Issued_Date">
+            </div>
+            <pre>         </pre>
+            <div class="form-group">
+                <label for="">Expiration Date</label>
+                <input type="date" class="form-control" id="Expiration_Date"  name="Expiration_Date">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="">Credential Id </label>
+            <input type="text" class="form-control" id="Credential_Id" name="Credential_Id">
+        </div>
+
+        <div class="form-group">
+            <label for="">Credential URL</label>
+            <input type="url" class="form-control" id="Credential_URL"  name="Credential_URL">
+        </div>
+
+        <div class="form-group">
+            <label for="">Description</label>
+            <input type="text" class="form-control" id="Description" name="Description">
+        </div>
+
+        <button type="submit" class="btn btn-primary" value="Certifications">Submit</button>
+    </form>
+
+
+</div>
+
+
+
+</body>
+</html>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Education</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<div class="container">
+    <form action="" class="form-horizontal" role="form" method="POST">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="">Institute Name</label>
+            <input type="text" class="form-control" id="Institution_Name" placeholder="Ex: Boston University" name="Institution_Name" required>
+        </div>
+
+        <div class="form-group">
+            <label for="">Degree</label>
+            <input type="text" class="form-control" id="Degree" placeholder="Ex: Bachelors.." name="Degree">
+        </div>
+
+        <div class="form-group">
+            <label for="">Field of study</label>
+            <input type="text" class="form-control" id="Field_Of_Study" placeholder="Ex: Computer Science" name="Field_Of_Study">
+        </div>
+
+        <div class="form-group">
+            <label for="">Grade</label>
+            <input type="text" class="form-control" id="Grade" name="Grade">
+        </div>
+        <div class="container row">
+        <div class="form-group">
+            <label for="">Start Date</label>
+            <input type="date" class="form-control" id="Start_Date" name="Start_Date">
+        </div>
+        <pre>     </pre>
+        <div class="form-group">
+            <label for=""> End Date</label>
+            <input type="date" class="form-control" id="End_date" name="End_Date">
+        </div>
+        </div>
+        <div class="form-group">
+            <label for="">Description</label>
+            <input type="text" class="form-control" id="Description" name="Description">
+        </div>
+        <button type="submit" class="btn btn-primary" value="Education">Submit</button>
+    </form>
+</div>
+
+</body>
+</html>
