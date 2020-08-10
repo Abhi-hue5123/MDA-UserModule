@@ -44,33 +44,36 @@ def register(request):
 
         profile_form = UserProfileForm(request.POST)
 
-        if profile_form.is_valid():
-            if password1==password2:
-                if User.objects.filter(username=username).exists():
-                    messages.info(request, 'The UserName is already taken')
-                    return redirect('register')
-                elif User.objects.filter(email=email).exists():
-                    messages.info(request, 'The Email is already Taken')
-                    return redirect('register')
-                else:
-                    user = User.objects.create_user(username=username,password=password1,email=email,first_name=first_name,last_name=last_name)
-                    #user.save()
-                    #print('User created')
-                    #return redirect('login')
-                    current_site = get_current_site(request)
-                    mail_subject = 'Activate your account.'
-                    message = render_to_string('accounts/acc_active_email.html', {
-                        'user': user,
-                        'domain': current_site.domain,
-                        'uid': urlsafe_base64_encode(force_bytes(user.pk)),
-                        'token': default_token_generator.make_token(user),
-                    })
-                    to_email = request.POST['email']
-                    email = EmailMessage(
-                        mail_subject, message, to=[to_email]
-                    )
-                    email.send()
-                    return HttpResponse('Please confirm your email address to complete the registration')
+        
+        if password1==password2:
+            if User.objects.filter(username=username).exists():
+                messages.info(request, 'The UserName is already taken')
+                return redirect('register')
+            elif User.objects.filter(email=email).exists():
+                messages.info(request, 'The Email is already Taken')
+                return redirect('register')
+            else:
+                user = User.objects.create_user(username=username,password=password1,email=email,first_name=first_name,last_name=last_name)
+                user.save()
+                profile = profile_form.save(commit=False)
+                profile.user = user
+                profile.save() 
+                #print('User created')
+                #return redirect('login')
+                current_site = get_current_site(request)
+                mail_subject = 'Activate your account.'
+                message = render_to_string('accounts/acc_active_email.html', {
+                    'user': user,
+                    'domain': current_site.domain,
+                    'uid': urlsafe_base64_encode(force_bytes(user.pk)),
+                    'token': default_token_generator.make_token(user),
+                })
+                to_email = request.POST['email']
+                email = EmailMessage(
+                    mail_subject, message, to=[to_email]
+                )
+                email.send()
+                return HttpResponse('Please confirm your email address to complete the registration')
 
         else:
             messages.info(request, 'Password Mismatch')
@@ -97,10 +100,10 @@ def activate(request, uidb64, token):
         user = None
     if user is not None and default_token_generator.check_token(user, token):
         user.is_active = True
-        user.save()
-        profile = profile_form.save(commit=False)
-        profile.user = user 
-        profile.save()
+        #user.save()
+        #profile = profile_form.save(commit=False)
+        #profile.user = user  
+        #profile.save()
         #if user.is_active==True:
         #return HttpResponse('Thank you for your email confirmation. Now you can login your account.')
         return redirect('login')
