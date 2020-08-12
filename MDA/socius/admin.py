@@ -7,4 +7,4 @@ admin.site.register(Destination)
 
 admin.site.register(UserList)
 class UserListAdmin(ImportExportModelAdmin):
-    list_display = ('name','email','coupon')
+    list_display = ('name','email','coupon','is_superuser')

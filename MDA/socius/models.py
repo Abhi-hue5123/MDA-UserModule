@@ -13,6 +13,7 @@ class UserList(models.Model):
     name = models.CharField(max_length=100, blank=True, null=True)
     email = models.EmailField(max_length=254,blank=True)
     coupon = models.CharField(max_length=100, blank=True, null=True)
+    is_superuser = models.BooleanField(default=False,blank=True, null=True)
 
 
 '''class MyUUIDModel(models.Model):
@@ -23,6 +24,7 @@ class UserList(models.Model):
 class MemberProfile(models.Model):
     #Member_Id = models.ForeignKey(MyUUIDModel,on_delete = models.CASCADE,default=0)
     user = models.OneToOneField(User, on_delete=models.CASCADE)
+
     First_Name = models.CharField(max_length=20,blank=True)
     Last_Name = models.CharField(max_length=20,blank=True)
     Profile_Pic_URL = models.ImageField(upload_to='profile_pics')

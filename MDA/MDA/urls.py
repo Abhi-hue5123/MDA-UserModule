@@ -32,6 +32,7 @@ urlpatterns = [
     path('accounts/',include('accounts.urls')),
     path('accounts/', include('django.contrib.auth.urls')),
     path('adduser/',v.simple_upload,name='simple_upload'),
+    path('active/<uidb64>/<token>/',v.active, name='active'),
     
 ]
 

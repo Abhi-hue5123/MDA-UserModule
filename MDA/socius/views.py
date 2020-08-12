@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from .models import Destination
 from .models import UserList
 from .resources import UserListResource
@@ -18,7 +18,7 @@ UserModel = get_user_model()
 from django.core import mail
 import uuid 
 from .models import MemberProfile,Phone,Address,Speciality,KeySKills,Certificates,Testimonial,Document,AcademicDetails,Event
-
+from django.contrib.auth.models import User
 
 # Create your views here.
 def index(response):
@@ -82,14 +82,33 @@ def simple_upload(request):
         		data[0],
         		data[1],
         		 data[2],
-        		 data[3]
+        		 data[3],
+                 data[4]
         		)
             value.save()
-        connection = mail.get_connection()
+        l=d
+        user=User.objects.filter(is_superuser='True').first()
+        current_site = get_current_site(request)
+        mail_subject = 'Invite to Socius'
+        message = render_to_string('socius/invite.html', {
+            'user': user,
+            'domain': current_site.domain,
+            'uid': urlsafe_base64_encode(force_bytes(user.pk)),
+            'token': default_token_generator.make_token(user),
+        })
+        for i in l:
+            #reciever_list.append(i['email'])
+            to_email = i
+            email = EmailMessage(
+                mail_subject, message, to=[to_email]
+            )
+            email.send()
+        return HttpResponse('Invitations sended')
+        '''connection = mail.get_connection()
         connection.open()
         email1 = mail.EmailMessage('MDA Invitation', 'This is the Invitation of MDA applcation.', settings.EMAIL_HOST_USER, d, connection=connection)
         email1.send()
-        connection.close()
+        connection.close()'''
 
             
             #send_mail('Invitation MDA','This is MDA application Invitation',settings.EMAIL_HOST_USER, data[2], fail_silently=False)
@@ -112,6 +131,21 @@ def simple_upload(request):
         mail_subject, message, to=[to_email]
     )
     email.send()'''
+
+def active(request, uidb64, token):
+    try:
+        uid = urlsafe_base64_decode(uidb64).decode()
+        user = UserModel._default_manager.get(pk=uid)
+    except(TypeError, ValueError, OverflowError, User.DoesNotExist):
+        user = None
+    if user is not None and default_token_generator.check_token(user, token):
+        user.is_active = True
+      #  user.save()
+        if user.is_active==True:
+        #return HttpResponse('Thank you for your email confirmation. Now you can login your account.')
+            return redirect('register')
+    else:
+        return HttpResponse('Invitation link is invalid!')
 
 
 def PersonalDetails(request):
