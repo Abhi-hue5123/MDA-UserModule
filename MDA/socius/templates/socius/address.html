@@ -1,0 +1,67 @@
+{% load widget_tweaks %}
+{% load static%}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Address</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+  <!--link rel="stylesheet" type="text/css" href="{% static 'CSS/divbg.css' %}"-->
+
+<style>
+    .container {
+        background-color:rgb(230, 243, 241);
+      }
+      .center {
+          margin: auto;
+          width: 40%;
+          padding: 10px;
+        }
+
+</style>
+</head>
+<body>
+<div class="center">
+    <div class="container">
+        <form action="{% url 'address' %}" class="form-horizontal" role="form" method="POST">
+        {% csrf_token %}
+        <!--{{ form.as_p}}
+        <div class="form-group">
+            <label>Flat No.</label>
+            {% render_field address_form.flatNo class="form-control" placeholder="Enter flat number" %}
+        </div>
+
+        <div class="form-group">
+            <label>Street</label>
+            {% render_field address_form.street class="form-control" rows="1" cols="20" placeholder="Enter the street name" %}
+        </div>
+
+        <div class="form-group">
+            <label>City</label>
+            {% render_field address_form.city class="form-control"  rows="1" cols="20" placeholder="Ex: Vizag" %}
+        </div>
+
+        <div class="form-group">
+            <label>State</label>
+            {% render_field address_form.state class="form-control" rows="1" cols="20" placeholder="Ex: Andhra Pradesh" %}
+        </div>
+
+        <div class="form-group">
+            <label>Country</label>
+            {% render_field address_form.country class="form-control" rows="1" cols="20" placeholder="Ex: India" %}
+        </div>
+
+        <div class="form-group">
+            <label>PinCode</label>
+            {% render_field address_form.pinCode class="form-control" placeholder="Enter Pin Code" %}
+        </div> -->
+        {{ address_form.as_p }}
+
+        <center><button type="submit" class="btn btn-primary" value="address">Save</button></center>
+
+    </form>
+    </div>
+</div>
+</body>
+</html>

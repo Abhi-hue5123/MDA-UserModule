@@ -1,3 +1,5 @@
+{% load widget_tweaks %}
+{% load static%}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,16 +7,26 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+  <!--link rel="stylesheet" type="text/css" href="{% static 'CSS/divbg.css' %}"-->
+
+<style>
+    .container {
+        background-color:rgb(230, 243, 241);
+      }
+      .center {
+          margin: auto;
+          width: 40%;
+          padding: 10px;
+        }
+
+</style>
 </head>
 <body>
-
+<div class="center">
 <div class="container">
-    <form action="" class="form-horizontal" role="form" method="POST">
+    <form action="{% url 'education' %}" class="form-horizontal" role="form" method="POST">
         {% csrf_token %}
-        <div class="form-group">
+        <!--<div class="form-group">
             <label for="">Institute Name</label>
             <input type="text" class="form-control" id="Institution_Name" placeholder="Ex: Boston University" name="Institution_Name" required>
         </div>
@@ -47,9 +59,11 @@
         <div class="form-group">
             <label for="">Description</label>
             <input type="text" class="form-control" id="Description" name="Description">
-        </div>
-        <button type="submit" class="btn btn-primary" value="Education">Submit</button>
+        </div>-->
+        {{ education_form.as_p }}
+        <center><button type="submit" class="btn btn-primary" value="education">Save</button></center>
     </form>
+</div>
 </div>
 
 </body>

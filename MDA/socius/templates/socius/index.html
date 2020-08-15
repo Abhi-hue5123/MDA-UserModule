@@ -44,6 +44,7 @@
 									{% if user.is_authenticated %}
 									<li>Hello, {{user.first_name}}</li>
 									<li><a href="accounts/logout">Logout</a></li>
+									
 									<li><a href="adduser">Upload User</a></li>
 									
 										<li class="nav-item dropdown">
@@ -52,13 +53,13 @@
 										  </a>
 									  
 										  <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-											<a class="dropdown-item" href="PersonalDetails.html">Personal details</a>
-											<a class="dropdown-item" href='Skills.html'>Skills & Specialities</a>
-											<a  class="dropdown-item" href="Education.html">Education</a>
-											<a class="dropdown-item" href="Certifications.html">Certifications</a>
-											<a class="dropdown-item" href="Testimonials.html">Testimonials</a>
-											<a class="dropdown-item" href="#", target="blank">Documents</a>
-											<a class="dropdown-item" href="#", target="blank">Events</a>
+											<a class="dropdown-item" href="profile.html">Personal details</a>
+											<a class="dropdown-item" href='skills.html'>Skills & Specialities</a>
+											<a  class="dropdown-item" href="education.html">Education</a>
+											<a class="dropdown-item" href="certificate.html">Certifications</a>
+											<a class="dropdown-item" href="testimonial.html">Testimonials</a>
+											<a class="dropdown-item" href="contactInfo.html", target="blank">Contact Info</a>
+											<a class="dropdown-item" href="address.html", target="blank">Address</a>
 										  </div>
 										</li>
 										   
@@ -186,7 +187,7 @@
 
 			<div class="home_page_nav">
 				<ul class="d-flex flex-column align-items-end justify-content-end">
-					<li><a href="#" data-scroll-to="#destinations">Offers<span>01</span></a></li>
+					<li><a href="#" data-scroll-to="#destinations">Member Directory<span>01</span></a></li>
 					<li><a href="#" data-scroll-to="#testimonials">Testimonials<span>02</span></a></li>
 					<li><a href="#" data-scroll-to="#news">Latest<span>03</span></a></li>
 				</ul>
@@ -275,8 +276,8 @@
 		<div class="container">
 			<div class="row">
 				<div class="col text-center">
-					<div class="section_subtitle">simply amazing places</div>
-					<div class="section_title"><h2>Popular Destinations</h2></div>
+					<div class="section_subtitle">Your Subscribed Member Directories</div>
+					<div class="section_title"><h2>Member Directory</h2></div>
 				</div>
 			</div>
 			<div class="row destinations_row">
@@ -284,20 +285,13 @@
 					<div class="destinations_container item_grid">
 
 						<!-- Destination -->
-						{% for dest in dests %}
+						{% for mem in mems %}
 						<div class="destination item">
-							<div class="destination_image">
-								<img src="{{dest.img.url}}" alt="">
-
-								{% if dest.offer %}
-								<div class="spec_offer text-center"><a href="#">Special Offer</a></div>
-								{% endif %}
-
-							</div>
+							
 							<div class="destination_content">
-								<div class="destination_title"><a href="destinations.html">{{dest.name}}</a></div>
-								<div class="destination_subtitle"><p>{{dest.desc}}</p></div>
-								<div class="destination_price">From ${{dest.price}}</div>
+								<div class="destination_title"><a href="{{mem.name}}.html">{{mem.name}}</a></div>
+								<div class="destination_subtitle"><p>{{mem.desc}}</p></div>
+								<div class="destination_price">Size of {{mem.size}}</div>
 							</div>
 						</div>
 						{% endfor %}

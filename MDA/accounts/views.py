@@ -12,7 +12,8 @@ from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.contrib.auth import get_user_model
 UserModel = get_user_model()
 from .froms import UserProfileForm
-
+from django.contrib.auth.models import Group
+from django.contrib.auth.models import User
 # Create your views here.
 def login(request):
     if request.method=='POST':
@@ -43,6 +44,7 @@ def register(request):
         email = request.POST['email']
 
         profile_form = UserProfileForm(request.POST)
+        
 
         
         if password1==password2:
@@ -54,6 +56,8 @@ def register(request):
                 return redirect('register')
             else:
                 user = User.objects.create_user(username=username,password=password1,email=email,first_name=first_name,last_name=last_name)
+                group = Group.objects.get(name='admin')
+                user.groups.add(group)
                 user.save()
                 profile = profile_form.save(commit=False)
                 profile.user = user

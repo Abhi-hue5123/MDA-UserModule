@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from .models import Destination
-from .models import UserList
+from .models import UserList , memberdirectory
 from .resources import UserListResource
 from django.contrib import messages
 from tablib import Dataset 
@@ -16,11 +16,17 @@ from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.contrib.auth import get_user_model
 UserModel = get_user_model()
 from django.core import mail
-import uuid 
-from .models import MemberProfile,Phone,Address,Speciality,KeySKills,Certificates,Testimonial,Document,AcademicDetails,Event
+#import uuid 
+#from .models import MemberProfile,Phone,Address,Speciality,KeySKills,Certificates,Testimonial,Document,AcademicDetails,Event
 from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth import authenticate, login, logout
+from .decorators import unauthenticated_user, allowed_users, admin_only
+from .forms import profileForm,contactInfoForm,addressForm,skillsForm,certificateForm,testimonialForm,educationForm
+from .models import profile, contactInfo, address,skills,certificate,testimonial,education
 
 # Create your views here.
+
 def index(response):
     
     '''dest1 = Destination()
@@ -46,13 +52,22 @@ def index(response):
 
     dests = [dest1, dest2, dest3]'''
 
-    dests = Destination.objects.all()
+    #dests = Destination.objects.all()
 
-    return render(response, "socius/index.html", {'dests': dests})
+    mems = memberdirectory.objects.all()
+
+    return render(response, "socius/index.html", {'mems': mems})
 
 def Team(request):
     return render(request, "socius/team.html")
 
+@login_required(login_url='login')
+def Python(request):
+    return render(request, "socius/Python.html")
+
+
+
+@allowed_users(allowed_roles=['admin','superuser'])
 def simple_upload(request):
     if request.method == 'POST':
         user_list = UserListResource()
@@ -148,74 +163,132 @@ def active(request, uidb64, token):
         return HttpResponse('Invitation link is invalid!')
 
 
-def PersonalDetails(request):
+@login_required()
+def profileView(request):
     if request.method == 'POST':
-        M= MemberProfile()
-        M.First_Name = request.POST['First_Name']
-        M.Last_Name =  request.POST["Last_Name"]
-        M.Bio =  request.POST["Bio"]
-        M.Tag_Line =  request.POST["Tag_Line"]
-        M.Status =  request.POST["Status"]
-        M.save()
+        profile_form = profileForm(request.POST)
+        if profile_form.is_valid():
+            profile_form.save()
+            messages.success(request,('Your profile was successfully updated!'))
+            return redirect('/')
+        else:
+            #messages.error(request,('Please correct the error below.'))
+            messages.info(request, 'The profile_form is not Valid')
+            return redirect('profile')
+        return redirect('index')
+    else:
+        profile_form = profileForm()
+    context = {'profile_form':profile_form}
+    return render(request,'socius/profile.html',context)
 
-        P= Phone()
-        P.Phone =  request.POST["Phone"]
-        P.Email_Id =  request.POST["Email_id"]
-        P.save()
 
-        A= Address()
-        A.Dno =  request.POST["Dno"]
-        A.Street = request.POST["Street"]
-        A.City =  request.POST["City"]
-        A.State =  request.POST["State"]
-        A.Country =  request.POST["Country"]
-        A.Pin_Code =  request.POST["Pin_code"]
-        A.save()
-    return render(request,'socius/PersonalDetails.html')
-
-def Education(request):
+@login_required
+def contactInfoView(request):
     if request.method == 'POST':
-        E=AcademicDetails()
-        E.Institution_Name = request.POST["Institution_Name"]
-        E.Degree = request.POST["Degree"]
-        E.Field_Of_Study = request.POST["Field_Of_Study"]
-        E.Grade = request.POST["Grade"]
-        E.Start_Date = request.POST["Start_Date"]
-        E.End_Date = request.POST["End_Date"]
-        E.Description = request.POST["Description"]
-        E.save()
-    return render(request,'socius/Education.html')
+        contactInfo_form = contactInfoForm(request.POST,instance=request.user)
+        if contactInfo_form.is_valid():
+            contactInfo_form.save()
+            messages.success(request,('Your contact details updated successfully'))
+        else:
+            messages.error(request,('Please correct the error below.'))
+        return redirect('index')
+    else:
+        contactInfo_form = contactInfoForm(instance=request.user)
+    
+    context = {'contactInfo_form':contactInfo_form}
+    return render(request,'socius/contactInfo.html',context)
 
-def Skills(request):
-    if request.method == 'POST':
-        Sk=KeySKills()
-        Sk.Skills = request.POST['Skills']
-        Sk.save()
-        Sp= Speciality()
-        Sp.speciality = request.POST['speciality']
-        Sp.save()
-    return render(request,'socius/Skills.html')
 
-def  Certifications(request):
+@login_required
+def addressView(request):
     if request.method == 'POST':
-        C = Certificates()
-        C.Name =  request.POST['Name']
-        C.Issuing_Org = request.POST['Issuing_Org']
-        C.Issued_Date = request.POST['Issued_Date']
-        C.Expiration_Date = request.POST['Expiration_Date']
-        C.Credential_Id = request.POST['Credential_Id']
-        C.Credential_URL = request.POST['Credential_URL']
-        C.Description = request.POST['Description']
-        C.save()
-    return render(request,'socius/Certifications.html')
+        address_form = addressForm(request.POST,instance=request.user)
+        if address_form.is_valid():
+            address_form.save()
+            messages.success(request,('Your addresss details updated successfully'))
+        else:
+            messages.error(request,('Please correct the error below.'))
+        return redirect('index')
+    else:
+        address_form = addressForm(instance=request.user)
+    
+    context = {'address_form':address_form}
+    return render(request,'socius/address.html',context)
 
-def Testimonials(request):
+
+@login_required
+def skillsView(request):
+    ''''
+    template_name = 'skills.html'
+
+    def get(self,request):
+        form = skillsForm()
+        skill = skills.objects.all()
+        args = {'form':form,'skill':skill}
+        return render(request, self.template_name,args)
+    '''
     if request.method == 'POST':
-        T=Testimonial()
-        T.Description = request.POST['Description']
-        T.Attestant = request.POST['Attestant']
-        T.Date = request.POST['Date']
-        T.Designation = request.POST['Designation']
-        T.Location = request.POST['Location']
-        T.save()
-    return render(request,'socius/Testimonials.html')
+        skills_form = skillsForm(request.POST,instance=request.user)
+        if skills_form.is_valid():
+            skills_form.save()
+            messages.success(request,('Your skills updated successfully'))
+            return redirect('/')
+        else:
+            messages.error(request,('Please correct the error below.'))
+        return redirect('index')
+    else:
+        skills_form = skillsForm(instance=request.user)
+    
+    context = {'skills_form':skills_form}
+    return render(request,'socius/skills.html',context)
+
+
+@login_required
+def certificateView(request):
+    if request.method == 'POST':
+        certificate_form = certificateForm(request.POST,instance=request.user)
+        if certificate_form.is_valid():
+            certificate_form.save()
+            messages.success(request,('Your  certifications updated successfully'))
+        else:
+            messages.error(request,('Please correct the error below.'))
+        return redirect('index')
+    else:
+        certificate_form = skillsForm(instance=request.user)
+    
+    context = {'certificate_form':certificate_form}
+    return render(request,'socius/certificate.html',context)
+
+
+@login_required
+def testimonialView(request):
+    if request.method == 'POST':
+        testimonial_form = testimonialForm(request.POST,instance=request.user)
+        if testimonial_form.is_valid():
+            testimonial_form.save()
+            messages.success(request,('Your testimonials updated successfully'))
+        else:
+            messages.error(request,('Please correct the error below.'))
+        return redirect('index')
+    else:
+        testimonial_form = testimonialForm(instance=request.user)
+    
+    context = {'testimonial_form':testimonial_form}
+    return render(request,'socius/testimonial.html',context)
+
+
+@login_required
+def educationView(request):
+    if request.method == 'POST':
+        education_form = educationForm(request.POST,instance=request.user)
+        if education_form.is_valid():
+            education_form.save()
+            messages.success(request,('Your academic details updated successfully'))
+        else:
+            messages.error(request,('Please correct the error below.'))
+        return redirect('index')
+    else:
+        education_form = educationForm(instance=request.user)
+    
+    context = {'education_form':education_form}
+    return render(request,'socius/education.html',context)

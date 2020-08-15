@@ -42,6 +42,8 @@ INSTALLED_APPS = [
     'socius.apps.SociusConfig',
     'import_export',
     'accounts.apps.AccountsConfig',
+    'multi_email_field',
+    'widget_tweaks',
 ]
 
 MIDDLEWARE = [

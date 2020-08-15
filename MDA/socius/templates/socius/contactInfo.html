@@ -1,0 +1,46 @@
+{% load widget_tweaks %}
+{% load static%}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Contact details</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+  <!--link rel="stylesheet" type="text/css" href="{% static 'CSS/divbg.css' %}"-->
+
+<style>
+  .container {
+      background-color:rgb(230, 243, 241);
+    }
+    .center {
+        margin: auto;
+        width: 40%;
+        padding: 10px;
+      }
+
+</style>
+</head>
+<body>
+<div class="center">
+  <div class="container">
+      <form action="{% url 'contactInfo' %}" class="form-horizontal" role="form" method="POST">
+      {% csrf_token %}
+      <!--{{ form.as_p}} 
+      <div class="form-group">
+          <label for="Phone">Phone Number</label>
+          <input type="tel" class="form-control" id="Phone" placeholder="enter valid phone number +91-3339994444" name="Phone" required>
+      </div>
+      
+      <div class="form-group">
+          <label for="Email_id">Email id </label>
+          <input type="email" class="form-control" id="Email_id" placeholder="Enter email id" name="Email_id">
+      </div> -->
+      {{ contactInfo_form.as_p }}
+      <center><button type="submit" class="btn btn-primary" value="contactInfo">Save</button></center>
+
+    </form>
+  </div>
+</div>
+</body>
+</html>

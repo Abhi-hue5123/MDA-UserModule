@@ -1,0 +1,72 @@
+{% load widget_tweaks %}
+{% load static%}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Profile</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+  <!--link rel="stylesheet" type="text/css" href="{% static 'CSS/divbg.css' %}"-->
+
+<style>
+    .container {
+        background-color:rgb(230, 243, 241);
+      }
+      .center {
+          margin: auto;
+          width: 40%;
+          padding: 10px;
+        }
+
+</style>
+</head>
+<body>
+<div class="center">
+<div class="container">
+    <form action="" class="form-horizontal" role="form" method="post">
+    {% csrf_token %}
+    {{ form.as_p }} 
+    <!--<div class="container">
+        <div class="d-flex justify-content-center bg-secondary mb-3"></div>
+                <div class="form-group">
+                <label for="First_Name">First Name</label>
+                {% render_field profile_form.firstName class="form-control" rows="5" cols="50" placeholder="Enter your First Name" %}
+                </div>
+
+                <div class="form-group">
+                    <label for="Last_Name">Last Name</label>
+                    <input type="text" class="form-control" id="Last_Name" placeholder="Enter LastName" name="Last_Name">
+                </div>
+
+                <div class="form-group">
+                    <label for="Bio">Bio</label>
+                    <input type="text" class="form-control" id="Bio" placeholder="Enter Bio" name="Bio">
+                </div>
+
+                <div class="form-group">
+                    <label for="Tag_Line">Tag Line</label>
+                    <input type="text" class="form-control" id="Tag_Line" placeholder="Enter Tag Line" name="Tag_Line">
+                </div>
+                
+                <div class="form-group">
+                    <label for="Status">Status</label>
+                    <input type="text" class="form-control" id="Status" placeholder="Freelancer,employee..." name="Status">
+                </div> -->
+                {{ profile_form.as_p }}
+
+                <center><button type="submit">Save</button></center>
+        </div>
+    </div>
+  </form>
+</div>
+</div>
+{% if messages %}
+          <ul class="messages">
+              {% for message in messages %}
+              <h3> {{message}} </h3>
+              {% endfor %}
+          </ul>
+{% endif %}
+</body>
+</html>
